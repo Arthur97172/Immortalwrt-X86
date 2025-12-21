@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./files/screenshot/istoreos.png" style="max-width: 100%; height: auto;" />
+  <img src="./files/etc/uci-defaults/screenshot/banner.svg" style="max-width: 100%; height: auto;" />
 # ImmortalWrt X86
 [![GitHub](https://img.shields.io/github/license/Arthur97172/Immortalwrt-X86.svg?label=LICENSE&logo=github&logoColor=%20)](https://github.com/wukongdaily/AutoBuildImmortalWrt/blob/master/LICENSE)
 ![GitHub Stars](https://img.shields.io/github/stars/Arthur97172/Immortalwrt-X86.svg?style=flat&logo=appveyor&label=Stars&logo=github)
