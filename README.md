@@ -9,6 +9,8 @@
 > [!TIP]
 > 😂此固件为 **非官方构建，不保证完全无BUG** ，请知悉😂
 
+## 🤗 项目截图 [![](https://img.shields.io/badge/-项目截图-FFFFFF.svg)](#-项目截图-)
+
 
 ## 🎉 Thanks [![](https://img.shields.io/badge/-Thanks-FFFFFF.svg)](#-Thanks-)
 - [immortalwrt](https://github.com/immortalwrt)
