@@ -15,8 +15,7 @@
 ### https://github.com/ophub/flippy-openwrt-actions
 ### https://github.com/sirpdboy
 ### https://github.com/wukongdaily/ib-overlay
-### 高级卸载插件出处 by VedioTalk https://xz.vumstar.com
-### 新增极光主题 来自 https://github.com/eamonxg/luci-theme-aurora
+
 
 #### 🍭引用和项目参考的仓库
 - https://github.com/wukongdaily/RunFilesBuilder
