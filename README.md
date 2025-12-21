@@ -1,5 +1,6 @@
 <div align="center">
   <img src="./files/etc/uci-defaults/screenshot/banner.svg" style="max-width: 100%; height: auto;" />
+</div>
 
 # ImmortalWrt X86
 
