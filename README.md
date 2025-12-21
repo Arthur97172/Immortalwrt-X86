@@ -1,7 +1,8 @@
 <div align="center">
   <img src="./files/etc/uci-defaults/screenshot/banner.svg" style="max-width: 100%; height: auto;" />
-</div>
+
   <h1>基于ImmortalWrt Imagebuilder X86-64</h1>
+  </div>
 # 
 
 ## 🤔 项目介绍 [![](https://img.shields.io/badge/-项目介绍-FFFFFF.svg)](#-项目介绍-)
