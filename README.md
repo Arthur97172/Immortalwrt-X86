@@ -1,5 +1,6 @@
 <div align="center">
   <img src="./files/etc/uci-defaults/screenshot/banner.svg" style="max-width: 100%; height: auto;" />
+
 # ImmortalWrt X86
 
 ## 🤔 项目介绍 [![](https://img.shields.io/badge/-项目介绍-FFFFFF.svg)](#-项目介绍-)
