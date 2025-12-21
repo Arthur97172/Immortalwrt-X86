@@ -10,7 +10,7 @@
 > 😂此固件为 **非官方构建，不保证完全无BUG** ，请知悉😂
 
 
-## 🌟鸣谢
+## 🎉 Thanks [![](https://img.shields.io/badge/-Thanks-FFFFFF.svg)](#-Thanks-)
 - [immortalwrt](https://github.com/immortalwrt)
 - [sirpdboy](https://github.com/sirpdboy)
 - [wukongdaily](https://github.com/wukongdaily)
