@@ -11,9 +11,9 @@
 
 
 ## 🌟鸣谢
-- [immortalwrt] (https://github.com/immortalwrt)
-- [sirpdboy] (https://github.com/sirpdboy)
-- [wukongdaily] (https://github.com/wukongdaily)
+- [immortalwrt](https://github.com/immortalwrt)
+- [sirpdboy](https://github.com/sirpdboy)
+- [wukongdaily](https://github.com/wukongdaily)
 
 
 ## 🙏 免责声明 [![](https://img.shields.io/badge/-免责声明-FFFFFF.svg)](#-免责声明-)
