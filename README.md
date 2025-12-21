@@ -1,8 +1,8 @@
 <div align="center">
   <img src="./files/etc/uci-defaults/screenshot/banner.svg" style="max-width: 100%; height: auto;" />
 </div>
-
-# ImmortalWrt X86
+  <h1>基于ImmortalWrt Imagebuilder X86-64</h1>
+# 
 
 ## 🤔 项目介绍 [![](https://img.shields.io/badge/-项目介绍-FFFFFF.svg)](#-项目介绍-)
 **ImmortalWrt** 目标是提供一个纯净的ImmortalWrt，能自由选择是否集成docker和iStore商店。
