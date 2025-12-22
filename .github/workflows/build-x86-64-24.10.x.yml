@@ -114,7 +114,7 @@ jobs:
           cat > ${{ github.workspace }}/router-info.md <<EOF
           ## 📡 路由器后台信息
           <a href="https://wkdaily.cpolar.cn/archives/1">
-           <img src="https://img.shields.io/badge/若下载慢可套用国内加速站下载-FC7C0D?logo=github&logoColor=fff&labelColor=000&style=for-the-badge"/>
+            <img src="https://img.shields.io/badge/若下载慢可套用国内加速站下载-FC7C0D?logo=github&logoColor=fff&labelColor=000&style=for-the-badge"/>
           </a>
           
           - 🏠 **后台地址**: ${{ github.event.inputs.custom_router_ip }}
@@ -123,10 +123,10 @@ jobs:
           EOF
 
           if [ "${{ github.event.inputs.include_docker }}" == "yes" ]; then
-            extra_content="#### With docker"
-            echo -e "\n$extra_content" >> ${{ github.workspace }}/router-info.md
+            # 格式与上方保持完全一致
+            echo "- 🧩 **Docker 状态**: 已集成" >> ${{ github.workspace }}/router-info.md
           else
-            echo -e "\n#### Without docker" >> ${{ github.workspace }}/router-info.md
+            echo "- 🧩 **Docker 状态**: 未集成" >> ${{ github.workspace }}/router-info.md
           fi
 
       - name: Upload ImmortWrt as release assets
