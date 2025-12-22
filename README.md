@@ -26,6 +26,11 @@
 ## 🤗 项目截图 [![](https://img.shields.io/badge/-项目截图-FFFFFF.svg)](#-项目截图-)
 ![screenshots](./screenshot/01.jpg)
 
+## 🌟 Star戳一戳，好运加满！😆
+> **"点过 `Star` 的朋友，颜值与智慧双双在线！✨"**
+> 
+> **"您的每一个⭐️，都是开源土壤里的一缕阳光，让灵感发芽，让创造生长~"**
+
 ## 🎉 Thanks [![](https://img.shields.io/badge/-Thanks-FFFFFF.svg)](#-Thanks-)
 - [immortalwrt](https://github.com/immortalwrt)
 - [sirpdboy](https://github.com/sirpdboy)
