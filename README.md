@@ -2,9 +2,21 @@
   <img src="./files/etc/uci-defaults/screenshot/banner.svg" style="max-width: 100%; height: auto;" />
 
   <h1>基于ImmortalWrt Imagebuilder X86-64</h1>
-  </div>
-# 
 
+  <img src="https://img.shields.io/github/downloads/Arthur97172/ImmortalWrt-X86/total.svg?style=for-the-badge&color=32C955"/>
+  <img src="https://img.shields.io/github/stars/Arthur97172/ImmortalWrt-X86.svg?style=for-the-badge&color=orange"/>
+  <img src="https://img.shields.io/github/forks/Arthur97172/ImmortalWrt-X86.svg?style=for-the-badge&color=ff69b4"/>
+  <img src="https://img.shields.io/github/license/Arthur97172/ImmortalWrt-X86.svg?style=for-the-badge&color=blueviolet"/>
+
+  [![](https://img.shields.io/badge/-目录:-696969.svg)](#readme)
+  [![](https://img.shields.io/badge/-项目介绍-FFFFFF.svg)](#-项目介绍-)
+  [![](https://img.shields.io/badge/-第三方插件-FFFFFF.svg)](#-第三方插件-)
+  [![](https://img.shields.io/badge/-支持设备-FFFFFF.svg)](#-支持设备-)
+  [![](https://img.shields.io/badge/-项目截图-FFFFFF.svg)](#-项目截图-)
+  [![](https://img.shields.io/badge/-Thanks-FFFFFF.svg)](#-Thanks-)
+  [![](https://img.shields.io/badge/-免责声明-FFFFFF.svg)](#-免责声明-)
+  </div>
+  
 ## 🤔 项目介绍 [![](https://img.shields.io/badge/-项目介绍-FFFFFF.svg)](#-项目介绍-)
 **ImmortalWrt** 目标是提供一个纯净的ImmortalWrt，能自由选择是否集成docker和iStore商店。
 
