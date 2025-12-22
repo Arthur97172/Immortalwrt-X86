@@ -50,6 +50,9 @@ on:
       pppoe_password:
         description: "宽带密码 (若启用PPPoE)"
         required: false
+
+env:
+  VERSION: ${{ inputs.luci_version }}
   
 jobs:
   build:
@@ -59,15 +62,31 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set executable permissions
+      - name: ⚙️ 设置可执行权限
         run: chmod +x ${{ github.workspace }}/x86-64/build_config.sh
 
-      - name: Save Custom Router IP into OpenWrt files
+      - name: ⚙️ 安装依赖
         run: |
-          mkdir -p "${{ github.workspace }}/custom"
-          echo "${{ github.event.inputs.custom_router_ip }}" > "${{ github.workspace }}/custom/custom_router_ip.txt"
-          echo "您设置的路由器管理地址是:${{ github.event.inputs.custom_router_ip }}"
-          # 后续步骤会将该文件映射到路由器/etc/config/custom_router_ip.txt 以便用于开机脚本99-custom.sh读取用户设置的ip
+          sudo apt-get update
+          sudo apt-get install -y build-essential libncurses5-dev zstd curl unzip tree
+
+      - name: ⚙️ 设置IP、网关和版本号
+        run: |
+          CONFIG_PATH="./files/uci-defaults/99-custom.sh"
+          echo "当前网络配置路径: $CONFIG_PATH"
+        
+          # 1. 替换版本号占位符
+          sed -i "s/版本号/${{ env.VERSION }}/g" "$CONFIG_PATH"
+          [ -f "./files/etc/banner" ] && sed -i "s/版本号/${{ env.VERSION }}/g" "./files/etc/banner"
+
+          # 2. 网络逻辑配置 (关键修改点：不再删除行，改用关键词替换)
+          sed -i "s/192.168.5.1/${{ custom_router_ip }}/g" "$CONFIG_PATH"
+
+          # 3. 替换脚本末尾的描述信息
+          sed -i "s/VERXXXX/${{ env.VERSION }}/g" "$CONFIG_PATH"
+        
+          echo "✅ 配置修改完成，输出预览："
+          cat "$CONFIG_PATH"
       
       - name: Validate PPPoE Inputs
         run: |
