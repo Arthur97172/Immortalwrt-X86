@@ -51,7 +51,6 @@ on:
         description: "宽带密码 (若启用PPPoE)"
         required: false
 
-env:
   VERSION: ${{ inputs.luci_version }}
   
 jobs:
