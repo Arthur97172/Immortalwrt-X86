@@ -59,15 +59,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: ⚙️ 设置可执行权限
+      - name: Set executable permissions
         run: chmod +x ${{ github.workspace }}/x86-64/build_config.sh
 
-      - name: ⚙️ 安装依赖
+      - name: Install related software
         run: |
           sudo apt-get update
           sudo apt-get install -y build-essential libncurses5-dev zstd curl unzip tree
 
-      - name: ⚙️ 设置IP、网关和版本号
+      - name: Save Custom Router IP into OpenWrt files
         run: |
           CONFIG_PATH="./files/uci-defaults/99-custom.sh"
           echo "当前网络配置路径: $CONFIG_PATH"
