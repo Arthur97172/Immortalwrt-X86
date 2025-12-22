@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./screenshot/banner.svg" style="max-width: 100%; height: auto;" />
+  <img src="./files/screenshot/banner.svg" style="max-width: 100%; height: auto;" />
 
   <h1>基于ImmortalWrt Imagebuilder X86-64</h1>
 
@@ -24,7 +24,7 @@
 > 😂此固件为 **非官方构建，不保证完全无BUG** ，请知悉😂
 
 ## 🤗 项目截图 [![](https://img.shields.io/badge/-项目截图-FFFFFF.svg)](#-项目截图-)
-![screenshots](./screenshot/01.jpg)
+![screenshots](./files/screenshot/01.jpg)
 
 ## 🌟 Star戳一戳，好运加满！😆
 > **"点过 `Star` 的朋友，颜值与智慧双双在线！✨"**
