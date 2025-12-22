@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./files/etc/uci-defaults/screenshot/banner.svg" style="max-width: 100%; height: auto;" />
+  <img src="./screenshot/banner.svg" style="max-width: 100%; height: auto;" />
 
   <h1>基于ImmortalWrt Imagebuilder X86-64</h1>
 
@@ -24,7 +24,7 @@
 > 😂此固件为 **非官方构建，不保证完全无BUG** ，请知悉😂
 
 ## 🤗 项目截图 [![](https://img.shields.io/badge/-项目截图-FFFFFF.svg)](#-项目截图-)
-![screenshots](./files/etc/uci-defaults/screenshot/01.jpg)
+![screenshots](./screenshot/01.jpg)
 
 ## 🎉 Thanks [![](https://img.shields.io/badge/-Thanks-FFFFFF.svg)](#-Thanks-)
 - [immortalwrt](https://github.com/immortalwrt)
