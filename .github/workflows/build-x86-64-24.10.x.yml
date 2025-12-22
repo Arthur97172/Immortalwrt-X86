@@ -50,8 +50,6 @@ on:
       pppoe_password:
         description: "宽带密码 (若启用PPPoE)"
         required: false
-
-  VERSION: ${{ inputs.luci_version }}
   
 jobs:
   build:
@@ -134,7 +132,7 @@ jobs:
       - name: Upload ImmortWrt as release assets
         uses: softprops/action-gh-release@v2.2.1
         with:
-          tag_name: Immortalwrt-x86-64-${{ env.VERSION }}
+          tag_name: Immortalwrt-x86-64-${{ inputs.luci_version }}
           body_path: ${{ github.workspace }}/router-info.md
           files: |
             ${{ github.workspace }}/bin/targets/x86/64/*squashfs-combined-efi.img.gz
