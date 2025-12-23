@@ -136,7 +136,6 @@ jobs:
           profile="${{ github.event.inputs.profile }}"
           include_docker="${{ github.event.inputs.include_docker }}"
           luci_version="${{ github.event.inputs.luci_version }}"
-          echo "Building for profile: $profile"
           docker run --rm -i \
             --user root \
             -v "${{ github.workspace }}/bin:/home/build/immortalwrt/bin" \
@@ -145,6 +144,7 @@ jobs:
             -v "${{ github.workspace }}/x86-64/imm.config:/home/build/immortalwrt/.config" \
             -v "${{ github.workspace }}/shell:/home/build/immortalwrt/shell" \
             -v "${{ github.workspace }}/x86-64/build_config.sh:/home/build/immortalwrt/build.sh" \
+            -v "${{ github.workspace }}/x86-64/repositories.conf:/home/build/immortalwrt/repositories.conf" \
             -e PROFILE=$profile \
             -e INCLUDE_DOCKER=$include_docker \
             -e ENABLE_PPPOE=${{ inputs.enable_pppoe }} \
@@ -152,7 +152,6 @@ jobs:
             -e PPPOE_PASSWORD=${{ inputs.pppoe_password }} \
           immortalwrt/imagebuilder:x86-64-openwrt-${luci_version} /bin/bash /home/build/immortalwrt/build.sh
           
-
       - name: Create info
         run: |
           cat > ${{ github.workspace }}/router-info.md <<EOF
