@@ -101,7 +101,7 @@ jobs:
           exit 1
         fi
 
-    - name: 🧱 构建OpenWrt固件
+    - name: 🧱 构建ImmortalWrt固件
       working-directory: ./imagebuilder
       run: |
         bash ./build_config.sh
