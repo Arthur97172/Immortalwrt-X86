@@ -147,6 +147,7 @@ jobs:
             -v "${{ github.workspace }}/shell:/home/build/immortalwrt/shell" \
             -v "${{ github.workspace }}/x86-64/build_config.sh:/home/build/immortalwrt/build.sh" \
             -v "${{ github.workspace }}/x86-64/repositories.conf:/home/build/immortalwrt/repositories.conf" \
+            -v "${{ github.workspace }}/files/customfeeds/customfeeds.conf:/home/build/immortalwrt/files/etc/opkg/customfeeds.conf" \
             -e PROFILE=$profile \
             -e INCLUDE_DOCKER=$include_docker \
             -e ENABLE_PPPOE=${{ inputs.enable_pppoe }} \
