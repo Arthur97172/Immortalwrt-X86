@@ -79,7 +79,7 @@ jobs:
           [ -f "./files/etc/banner" ] && sed -i "s/版本号/${{ inputs.luci_version }}/g" "./files/etc/banner"
 
           # 2. 网络逻辑配置 (关键修改点：不再删除行，改用关键词替换)
-          sed -i "s/192.168.5.1/${{ inputs.custom_router_ip }}/g" "$CONFIG_PATH"
+          sed -i "s/__IPADDR__/${{ inputs.custom_router_ip }}/g" "$CONFIG_PATH"
 
           # 3. 替换脚本末尾的描述信息
           sed -i "s/VERXXXX/${{ inputs.luci_version }}/g" "$CONFIG_PATH"
