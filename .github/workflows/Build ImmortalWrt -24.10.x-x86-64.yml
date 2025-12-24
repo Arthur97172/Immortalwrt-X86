@@ -43,7 +43,7 @@ jobs:
 
     - name: ⚙️ 设置可执行权限
       run: | 
-        chmod +x x86/build_config.sh
+        chmod +x x86-64/build_config.sh
         chmod +x shell/*.sh
 
     - name: ⚙️ 安装依赖
@@ -118,7 +118,7 @@ jobs:
       run: |
         cat > ${{ github.workspace }}/router-info.md <<EOF
         ## 📡 路由器后台信息
-        📌 版本： OpenWrt-x86-64-${{ env.VERSION }}
+        📌 版本： ImmortalWrt-x86-64-${{ env.VERSION }}
         🌐 初始IP： ${{ inputs.ipaddr }}
         📜 Docker 状态: ${{ inputs.include_docker == 'yes' && '已集成' || '未集成' }}
         EOF
