@@ -5,52 +5,32 @@ on:
     inputs:
       luci_version:
         description: "选择luci版本"
-        required: false
-        default: "24.10.4"
+        required: true
+        default: "24.10.5"
         type: choice
         options:
-          - 24.10.0
-          - 24.10.1
-          - 24.10.2
-          - 24.10.3
-          - 24.10.4
-      custom_router_ip:
-        description: "请设置路由器的管理地址(仅对多网口路由器有效) 格式:192.168.x.1 或 10.x.x.1"
+          - '24.10.0'
+          - '24.10.1'
+          - '24.10.2'
+          - '24.10.3'
+          - '24.10.4' 
+          - '24.10.5'           
+      ipaddr:
+        description: '请输入管理IP'
         required: true
-        default: "192.168.5.1"
-      profile:
-        description: '请输入要编译固件大小 单位(MB)'
-        required: true
-        default: '2048'
-      enable_store:
-        description: "集成 store 商店"
-        required: false
-        type: boolean
-        default: false
+        default: '192.168.5.1'
       include_docker:
-        description: |
-          是否编译 Docker 插件
+        description: "是否编译 Docker 插件"
         required: true
         default: 'no'
         type: choice
         options:
           - 'yes'
           - 'no'
-      enable_pppoe:
-        description: "是否配置PPPoE拨号信息?"
-        required: true
-        default: 'no'
-        type: choice
-        options:
-        - 'yes'
-        - 'no'
-      pppoe_account:
-        description: "宽带账号 (若启用PPPoE)"
-        required: false
-      pppoe_password:
-        description: "宽带密码 (若启用PPPoE)"
-        required: false
-  
+
+env:
+  VERSION: ${{ inputs.luci_version }}
+
 jobs:
   build:
     runs-on: ubuntu-22.04
@@ -58,128 +38,99 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      - name: Set executable permissions
-        run: chmod +x ${{ github.workspace }}/x86-64/build_config.sh
+    - name: ⚙️ 设置可执行权限
+      run: | 
+        chmod +x x86/build_config.sh
+        chmod +x shell/*.sh
 
-      - name: Install related software
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y build-essential libncurses5-dev zstd curl unzip tree
+    - name: ⚙️ 安装依赖
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential libncurses5-dev zstd curl unzip tree
 
-      - name: Save Custom Router IP into OpenWrt files
-        run: |
-          CONFIG_PATH="./files/uci-defaults/99-custom.sh"
-          echo "当前网络配置路径: $CONFIG_PATH"
-        
+    - name: ⚙️ 设置IP、网关和版本号
+      run: |
+        CONFIG_PATH="./files/uci-defaults/99-custom.sh"
+        sed -i "s/版本号/${{ env.VERSION }}/g" "$CONFIG_PATH"
+        [ -f "./files/etc/banner" ] && sed -i "s/版本号/${{ env.VERSION }}/g" "./files/etc/banner"
+        sed -i "s/__IPADDR__/${{ inputs.ipaddr }}/g" "$CONFIG_PATH"
+        sed -i "s/VERXXXX/${{ env.VERSION }}/g" "$CONFIG_PATH"
+
+    - name: ⏬ 下载 ImageBuilder
+      run: |
+        BUILD_VER="${{ env.VERSION }}"
+        URL="https://downloads.openwrt.org/releases/${BUILD_VER}/targets/x86/64/openwrt-imagebuilder-${BUILD_VER}-x86-64.Linux-x86_64.tar.zst"
+        curl -Lf -o imagebuilder.tar.zst "$URL"
+        tar --use-compress-program=unzstd -xvf imagebuilder.tar.zst
+        mv openwrt-imagebuilder-* imagebuilder
+
+    - name: ⏬ 复制必备文件
+      run: |
+        cp x86/build_config.sh imagebuilder/
+        cp x86/Makefile imagebuilder/
+        cp x86/repositories.conf imagebuilder/
+        cp shell/prepare-packages.sh imagebuilder/
+        cp shell/custom-packages.sh imagebuilder/
+        mkdir -p imagebuilder/files/etc/uci-defaults
+        cp files/uci-defaults/99-custom.sh imagebuilder/files/etc/uci-defaults/
+        mkdir -p imagebuilder/files/etc/opkg
+        cp -r files/customfeeds/* imagebuilder/files/etc/opkg/ 2>/dev/null || true
+        # 验证信息
+        ls -l imagebuilder/files/etc/opkg/customfeeds.conf && echo "已拷贝 customfeeds.conf"
+
+    - name: ⚙️ 动态获取 Kmod 哈希并更新配置
+      run: |
+        NEW_VER="${{ inputs.luci_version }}"
+        # ImmortalWrt 的 x86-64 内核路径
+        BASE_URL="https://downloads.immortalwrt.org/releases/${NEW_VER}/targets/x86/64/kmods/"
+          
+        echo "正在从 $BASE_URL 获取最新的内核哈希..."
+        # 获取哈希文件夹名称
+        NEW_KMOD_DIR=$(curl -sL $BASE_URL | grep -oE "[0-9.-]+-[a-f0-9]{32}" | head -n 1)
+          
+        TARGET_CONF="${{ github.workspace }}/x86-64/repositories.conf"
+          
+        if [ -n "$NEW_KMOD_DIR" ]; then
+          FULL_KMOD_URL="${BASE_URL}${NEW_KMOD_DIR}"
+          echo "✅ 成功匹配新路径: $FULL_KMOD_URL"
+            
           # 1. 替换版本号占位符
-          sed -i "s/版本号/${{ inputs.luci_version }}/g" "$CONFIG_PATH"
-          [ -f "./files/etc/banner" ] && sed -i "s/版本号/${{ inputs.luci_version }}/g" "./files/etc/banner"
-
-          # 2. 网络逻辑配置 (关键修改点：不再删除行，改用关键词替换)
-          sed -i "s/__IPADDR__/${{ inputs.custom_router_ip }}/g" "$CONFIG_PATH"
-
-          # 3. 替换脚本末尾的描述信息
-          sed -i "s/VERXXXX/${{ inputs.luci_version }}/g" "$CONFIG_PATH"
-        
-          echo "✅ 配置修改完成，输出预览："
-          cat "$CONFIG_PATH"
-      
-      - name: Validate PPPoE Inputs
-        run: |
-          if [[ "${{ inputs.enable_pppoe }}" == "yes" ]]; then
-            if [[ -z "${{ inputs.pppoe_account }}" || -z "${{ inputs.pppoe_password }}" ]]; then
-              echo "Error: PPPoE account and password must be provided when PPPoE is enabled!"
-              exit 1
-            fi
-          fi
-      
-      - name: Enable Store integration
-        run: |
-          if [ "${{ github.event.inputs.enable_store }}" == "true" ]; then
-            echo 'CUSTOM_PACKAGES="$CUSTOM_PACKAGES luci-app-store"' >> shell/custom-packages.sh
-            echo "✅ 已追加 luci-app-store"
-          else
-            echo "❎ 未启用 luci-app-store"
-          fi
-
-      - name: ⚙️ 动态获取 Kmod 哈希并更新配置
-        run: |
-          NEW_VER="${{ inputs.luci_version }}"
-          # ImmortalWrt 的 x86-64 内核路径
-          BASE_URL="https://downloads.immortalwrt.org/releases/${NEW_VER}/targets/x86/64/kmods/"
-          
-          echo "正在从 $BASE_URL 获取最新的内核哈希..."
-          # 获取哈希文件夹名称
-          NEW_KMOD_DIR=$(curl -sL $BASE_URL | grep -oE "[0-9.-]+-[a-f0-9]{32}" | head -n 1)
-          
-          TARGET_CONF="${{ github.workspace }}/x86-64/repositories.conf"
-          
-          if [ -n "$NEW_KMOD_DIR" ]; then
-            FULL_KMOD_URL="${BASE_URL}${NEW_KMOD_DIR}"
-            echo "✅ 成功匹配新路径: $FULL_KMOD_URL"
+          sed -i "s|VERSION_PLACEHOLDER|${NEW_VER}|g" "$TARGET_CONF"
+          # 2. 强力替换 kmods 行
+          sed -i "s|^src/gz openwrt_kmods.*|src/gz openwrt_kmods $FULL_KMOD_URL|g" "$TARGET_CONF"
             
-            # 1. 替换版本号占位符
-            sed -i "s|VERSION_PLACEHOLDER|${NEW_VER}|g" "$TARGET_CONF"
-            # 2. 强力替换 kmods 行
-            sed -i "s|^src/gz openwrt_kmods.*|src/gz openwrt_kmods $FULL_KMOD_URL|g" "$TARGET_CONF"
-            
-            echo "--- 替换后的配置文件内容预览 ---"
-            cat "$TARGET_CONF"
-          else
-            echo "❌ 无法获取 Kmod 哈希，请检查版本是否存在: $BASE_URL"
-            exit 1
-          fi
+          echo "--- 替换后的配置文件内容预览 ---"
+          cat "$TARGET_CONF"
+        else
+          echo "❌ 无法获取 Kmod 哈希，请检查版本是否存在: $BASE_URL"
+          exit 1
+        fi
 
-      - name: Build ImmortalWrt-x86-64-efi
-        run: |
-          profile="${{ github.event.inputs.profile }}"
-          include_docker="${{ github.event.inputs.include_docker }}"
-          luci_version="${{ github.event.inputs.luci_version }}"
-          docker run --rm -i \
-            --user root \
-            -v "${{ github.workspace }}/bin:/home/build/immortalwrt/bin" \
-            -v "${{ github.workspace }}/files:/home/build/immortalwrt/files" \
-            -v "${{ github.workspace }}/custom:/home/build/immortalwrt/files/etc/config" \
-            -v "${{ github.workspace }}/x86-64/imm.config:/home/build/immortalwrt/.config" \
-            -v "${{ github.workspace }}/shell:/home/build/immortalwrt/shell" \
-            -v "${{ github.workspace }}/x86-64/build_config.sh:/home/build/immortalwrt/build.sh" \
-            -v "${{ github.workspace }}/x86-64/repositories.conf:/home/build/immortalwrt/repositories.conf" \
-            -v "${{ github.workspace }}/files/customfeeds/customfeeds.conf:/home/build/immortalwrt/files/etc/opkg/customfeeds.conf" \
-            -e PROFILE=$profile \
-            -e INCLUDE_DOCKER=$include_docker \
-            -e ENABLE_PPPOE=${{ inputs.enable_pppoe }} \
-            -e PPPOE_ACCOUNT=${{ inputs.pppoe_account }} \
-            -e PPPOE_PASSWORD=${{ inputs.pppoe_password }} \
-          immortalwrt/imagebuilder:x86-64-openwrt-${luci_version} /bin/bash /home/build/immortalwrt/build.sh
-          
-      - name: Create info
-        run: |
-          cat > ${{ github.workspace }}/router-info.md <<EOF
-          ## 📡 路由器后台信息
-          
-          - 🏠 **后台地址**: ${{ github.event.inputs.custom_router_ip }}
-          - 👤 **用户名**: root
-          - 🔑 **密码**: 无
-          EOF
+    - name: 🧱 构建OpenWrt固件
+      working-directory: ./imagebuilder
+      run: |
+        bash ./build_config.sh
 
-          if [ "${{ github.event.inputs.include_docker }}" == "yes" ]; then
-            # 格式与上方保持完全一致
-            echo "- 🧩 **Docker 状态**: 已集成" >> ${{ github.workspace }}/router-info.md
-          else
-            echo "- 🧩 **Docker 状态**: 未集成" >> ${{ github.workspace }}/router-info.md
-          fi
+    - name: 📜 生成发布说明
+      run: |
+        cat > ${{ github.workspace }}/router-info.md <<EOF
+        ## 📡 路由器后台信息
+        📌 版本： OpenWrt-x86-64-${{ env.VERSION }}
+        🌐 初始IP： ${{ inputs.ipaddr }}
+        📜 Docker 状态: ${{ inputs.include_docker == 'yes' && '已集成' || '未集成' }}
+        EOF
 
-      - name: Upload ImmortWrt as release assets
-        uses: softprops/action-gh-release@v2.2.1
-        with:
-          tag_name: Immortalwrt-${{ inputs.luci_version }}-x86-64-RELEASE
-          body_path: ${{ github.workspace }}/router-info.md
-          files: |
-            ${{ github.workspace }}/bin/targets/x86/64/*squashfs-combined-efi.img.gz
-            ${{ github.workspace }}/bin/targets/x86/64/sha256sums
-          token: ${{ secrets.GITHUB_TOKEN }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: 🚀 上传到 Release
+      uses: softprops/action-gh-release@v2.2.1
+      with:
+        tag_name: OpenWrt-${{ env.VERSION }}-x86-64-RELEASE
+        body_path: ${{ github.workspace }}/router-info.md
+        files: |
+          imagebuilder/bin/targets/x86/64/*squashfs-combined-efi.img.gz
+          imagebuilder/bin/targets/x86/64/sha256sums
+        token: ${{ secrets.GITHUB_TOKEN }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
