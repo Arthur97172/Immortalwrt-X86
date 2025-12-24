@@ -74,7 +74,7 @@ elif [ "$count" -gt 1 ]; then
     # LAN口设置静态IP
     uci set network.lan.proto='static'
     # 多网口设备 支持修改为别的ip地址,别的地址应该是网关地址，形如192.168.xx.1 项目说明里都强调过。
-    uci set network.lan.ipaddr='192.168.5.1'
+    uci set network.lan.ipaddr='__IPADDR__'
     uci set network.lan.netmask='255.255.255.0'
 fi
 # 设置所有网口可连接 SSH
