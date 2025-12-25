@@ -75,9 +75,9 @@ jobs:
 
     - name: ⚙️ 动态获取 Kmod 哈希并更新配置
       run: |
-        NEW_VER="${{ inputs.luci_version }}"
+        BUILD_VER="${{ env.VERSION }}"
         # ImmortalWrt 的 x86-64 内核路径
-        BASE_URL="https://downloads.immortalwrt.org/releases/${NEW_VER}/targets/x86/64/kmods/"
+        BASE_URL="https://downloads.immortalwrt.org/releases/${BUILD_VER}/targets/x86/64/kmods/"
           
         echo "正在从 $BASE_URL 获取最新的内核哈希..."
         # 获取哈希文件夹名称
@@ -94,7 +94,7 @@ jobs:
           echo "✅ 成功匹配 kmods 路径: $FULL_KMOD_URL"
           
           # 1. 替换版本占位符
-          sed -i "s|VERSION_PLACEHOLDER|${NEW_VER}|g" imagebuilder/repositories.conf
+          sed -i "s|VERSION_PLACEHOLDER|${BUILD_VER}|g" imagebuilder/repositories.conf
           # 2. 替换 Kmod 完整路径
           sed -i "s|https://.*/kmods/KMOD_PLACEHOLDER|$FULL_KMOD_URL|g" imagebuilder/repositories.conf
         else
