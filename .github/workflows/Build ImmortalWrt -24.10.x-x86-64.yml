@@ -97,6 +97,7 @@ jobs:
           sed -i "s|VERSION_PLACEHOLDER|${BUILD_VER}|g" imagebuilder/repositories.conf
           # 2. 替换 Kmod 完整路径
           sed -i "s|https://.*/kmods/KMOD_PLACEHOLDER|$FULL_KMOD_URL|g" imagebuilder/repositories.conf
+          sed -i "s|^src/gz openwrt_kmods.*|src/gz openwrt_kmods $FULL_KMOD_URL|g" imagebuilder/repositories.conf
         else
           echo "❌ 无法获取 Kmod 哈希，请检查官方源是否存在该版本: $BASE_URL"
           exit 1
