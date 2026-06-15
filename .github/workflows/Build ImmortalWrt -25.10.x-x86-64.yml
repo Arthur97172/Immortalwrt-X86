@@ -1,4 +1,4 @@
-name: build-x86-64-immortalwrt-25.12.x
+name: 📦 Build Immortalwrt_x86-64-25.10.x
 on:
   workflow_dispatch:
     inputs:
