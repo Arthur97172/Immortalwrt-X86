@@ -32,6 +32,15 @@ fi
 sh shell/prepare-packages.sh
 ls -lah /home/build/immortalwrt/packages/ | tail -5
 
+# 复制 25.12.x 自定义源配置进固件
+if [ -f "files/customfeeds/customfeeds.conf.25.12" ]; then
+    mkdir -p files/etc/apk
+    cp files/customfeeds/customfeeds.conf.25.12 files/etc/apk/customfeeds.conf
+    echo "✅ 已复制 customfeeds.conf.25.12 到固件"
+else
+    echo "⚪️ 未找到 customfeeds.conf.25.12，跳过"
+fi
+
 echo "$(date '+%Y-%m-%d %H:%M:%S') - 开始构建固件..."
 echo "查看 repositories 信息——————"
 cat repositories
