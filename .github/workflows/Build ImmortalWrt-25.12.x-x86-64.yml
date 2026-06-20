@@ -18,6 +18,14 @@ on:
         description: "设置固件大小 单位(MB)"
         required: true
         default: "2048"
+      include_docker:
+        description: "是否集成 Docker 插件"
+        required: true
+        default: "no"
+        type: choice
+        options:
+          - 'yes'
+          - 'no'
 
 permissions:
   contents: write
@@ -50,6 +58,8 @@ jobs:
             -v "${{ github.workspace }}/x86:/home/build/immortalwrt/x86" \
             -v "${{ github.workspace }}/shell:/home/build/immortalwrt/shell" \
             -v "${{ github.workspace }}/files:/home/build/immortalwrt/files" \
+            -e INCLUDE_DOCKER=${{ inputs.include_docker }} \
+            -e ROOTFS_PARTSIZE=${{ inputs.rootfs_partsize }} \
             immortalwrt/imagebuilder:x86-64-openwrt-${{ inputs.luci_version }} \
             /bin/bash /home/build/immortalwrt/x86/build25.sh
 
@@ -61,6 +71,7 @@ jobs:
           🏠 后台地址： ${{ inputs.ipaddr }}
           👤 用户名： root
           🔑 密码： 无
+          🐳 Docker状态： ${{ inputs.include_docker == 'yes' && '已集成' || '未集成' }}
           EOF
 
       - name: 🚀 Upload to Release

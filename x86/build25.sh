@@ -3,8 +3,10 @@
 # 注意：此脚本在 immortalwrt/imagebuilder Docker 容器内运行
 
 ROOTFS_PARTSIZE=${ROOTFS_PARTSIZE:-"2048"}
+INCLUDE_DOCKER=${INCLUDE_DOCKER:-"no"}
 
 echo "Rootfs Size: $ROOTFS_PARTSIZE MB"
+echo "Include Docker: $INCLUDE_DOCKER"
 
 # 加载第三方插件配置（使用 x86 25.12 专用配置）
 source shell/apk-custom-packages-x86.sh
@@ -64,6 +66,12 @@ PACKAGES="$PACKAGES luci-app-samba4 luci-i18n-samba4-zh-cn luci-app-upnp luci-i1
 
 # [进阶功能]（cpufreq 在 x86 不可用，不列出）
 PACKAGES="$PACKAGES luci-i18n-ttyd-zh-cn luci-i18n-upnp-zh-cn luci-i18n-wol-zh-cn luci-i18n-ddns-zh-cn luci-i18n-hd-idle-zh-cn"
+
+# [Docker 插件]
+if [ "$INCLUDE_DOCKER" = "yes" ]; then
+    echo "🐳 Docker enabled, adding docker packages"
+    PACKAGES="$PACKAGES docker docker-compose luci-app-dockerman luci-i18n-dockerman-zh-cn"
+fi
 
 # [合并第三方插件]
 PACKAGES="$PACKAGES $CUSTOM_PACKAGES"
