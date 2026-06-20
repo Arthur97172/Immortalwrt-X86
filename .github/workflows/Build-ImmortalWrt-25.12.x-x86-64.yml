@@ -56,7 +56,7 @@ jobs:
           sed -i "s/VERXXXX/${{ inputs.luci_version }}/g" files/uci-defaults/99-custom.sh
           echo "✅ 配置修改完成"
 
-      - name: ⏬ 下载 OpenWrt ImageBuilder 25.12.x
+      - name: ⏬ 下载 ImmortalWrt ImageBuilder 25.12.x
         run: |
           BUILD_VER="${{ inputs.luci_version }}"
           URL="https://downloads.immortalwrt.org/releases/${BUILD_VER}/targets/x86/64/immortalwrt-imagebuilder-${BUILD_VER}-x86-64.Linux-x86_64.tar.zst"
@@ -94,7 +94,7 @@ jobs:
           fi
           cat imagebuilder/repositories
 
-      - name: 🧱 构建 OpenWrt 25.12.x 固件
+      - name: 🧱 构建 ImmortalWrt 25.12.x 固件
         working-directory: ./imagebuilder
         env:
           INCLUDE_DOCKER: ${{ inputs.include_docker }}
