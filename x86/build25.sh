@@ -14,7 +14,7 @@ echo "第三方软件包: $CUSTOM_PACKAGES"
 
 # Clone store repo 以获取第三方 .run 包
 echo "$(date '+%Y-%m-%d %H:%M:%S') - 同步第三方软件仓库..."
-git clone --depth=1 https://github.com/wukongdaily/store.git /tmp/store-repo
+git clone --depth=1 https://github.com/wukongdaily/apk.git /tmp/store-repo
 
 mkdir -p /home/build/immortalwrt/extra-packages
 mkdir -p /home/build/immortalwrt/packages
