@@ -71,10 +71,10 @@ PACKAGES="$PACKAGES kmod-fs-f2fs kmod-fs-vfat kmod-nf-nathelper kmod-nf-nathelpe
 PACKAGES="$PACKAGES luci-base luci-mod-admin-full luci-theme-argon luci-app-argon-config luci-i18n-argon-config-zh-cn"
 
 # [常用插件]
-PACKAGES="$PACKAGES luci-app-samba4 luci-i18n-samba4-zh-cn luci-app-upnp luci-i18n-upnp-zh-cn luci-app-wol luci-i18n-wol-zh-cn luci-app-ddns luci-i18n-ddns-zh-cn luci-app-ttyd luci-i18n-ttyd-zh-cn luci-app-hd-idle luci-i18n-hd-idle-zh-cn luci-i18n-filemanager-zh-cn"
+PACKAGES="$PACKAGES luci-app-samba4 luci-i18n-samba4-zh-cn luci-app-upnp luci-i18n-upnp-zh-cn luci-app-wol luci-i18n-wol-zh-cn luci-app-ddns luci-i18n-ddns-zh-cn luci-app-ttyd luci-i18n-ttyd-zh-cn"
 
 # [进阶功能]（cpufreq 在 x86 不可用，不列出）
-PACKAGES="$PACKAGES luci-i18n-ttyd-zh-cn luci-i18n-upnp-zh-cn luci-i18n-wol-zh-cn luci-i18n-ddns-zh-cn luci-i18n-hd-idle-zh-cn"
+PACKAGES="$PACKAGES luci-i18n-ttyd-zh-cn luci-i18n-upnp-zh-cn luci-i18n-wol-zh-cn luci-i18n-ddns-zh-cn"
 
 # [Docker 插件]
 if [ "$INCLUDE_DOCKER" = "yes" ]; then
