@@ -62,8 +62,8 @@ PACKAGES="$PACKAGES luci-base luci-mod-admin-full luci-theme-argon luci-app-argo
 # [常用插件]
 PACKAGES="$PACKAGES luci-app-samba4 luci-i18n-samba4-zh-cn luci-app-upnp luci-i18n-upnp-zh-cn luci-app-wol luci-i18n-wol-zh-cn luci-app-ddns luci-i18n-ddns-zh-cn luci-app-ttyd luci-i18n-ttyd-zh-cn luci-app-hd-idle luci-i18n-hd-idle-zh-cn luci-i18n-filemanager-zh-cn"
 
-# [进阶功能]
-PACKAGES="$PACKAGES luci-app-cpufreq luci-i18n-cpufreq-zh-cn luci-i18n-ttyd-zh-cn luci-i18n-upnp-zh-cn luci-i18n-wol-zh-cn luci-i18n-ddns-zh-cn luci-i18n-hd-idle-zh-cn"
+# [进阶功能]（cpufreq 在 x86 不可用，不列出）
+PACKAGES="$PACKAGES luci-i18n-ttyd-zh-cn luci-i18n-upnp-zh-cn luci-i18n-wol-zh-cn luci-i18n-ddns-zh-cn luci-i18n-hd-idle-zh-cn"
 
 # [合并第三方插件]
 PACKAGES="$PACKAGES $CUSTOM_PACKAGES"
