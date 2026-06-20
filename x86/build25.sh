@@ -8,29 +8,29 @@ INCLUDE_DOCKER=${INCLUDE_DOCKER:-"no"}
 echo "Rootfs Size: $ROOTFS_PARTSIZE MB"
 echo "Include Docker: $INCLUDE_DOCKER"
 
-# 加载第三方插件配置（使用 x86 25.12 专用配置）
-source shell/apk-custom-packages-x86.sh
+# 加载第三方插件配置（使用 25.12 配置）
+source apk-custom-packages.sh
 echo "第三方软件包: $CUSTOM_PACKAGES"
 
-# Clone store repo 以获取第三方 .run 包
+# 同步第三方仓库
 echo "$(date '+%Y-%m-%d %H:%M:%S') - 同步第三方软件仓库..."
 git clone --depth=1 https://github.com/wukongdaily/apk.git /tmp/store-repo
 
-mkdir -p /home/build/immortalwrt/extra-packages
-mkdir -p /home/build/immortalwrt/packages
+mkdir -p extra-packages
+mkdir -p packages
 
 # 复制 x86 的 .run 文件
 if [ -d "/tmp/store-repo/run/x86" ]; then
-    cp -r /tmp/store-repo/run/x86/* /home/build/immortalwrt/extra-packages/
+    cp -r /tmp/store-repo/run/x86/* extra-packages/
     echo "✅ Run files copied:"
-    ls -lh /home/build/immortalwrt/extra-packages/*.run 2>/dev/null || echo "无 run 文件"
+    ls -lh extra-packages/*.run 2>/dev/null || echo "无 run 文件"
 else
     echo "⚪️ 无 x86 专用 run 文件"
 fi
 
 # 解压并拷贝 apk/ipk
-sh shell/prepare-packages.sh
-ls -lah /home/build/immortalwrt/packages/ | tail -5
+sh prepare-packages.sh
+ls -lah packages/ | tail -5
 
 # 复制 25.12.x 自定义源配置进固件
 if [ -f "files/customfeeds/25.customfeeds.conf" ]; then
