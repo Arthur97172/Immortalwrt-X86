@@ -20,6 +20,10 @@ on:
         description: '请输入管理IP'
         required: true
         default: '192.168.5.1'
+      rootfs_partsize:
+        description: '设置固件大小 单位(MB)'
+        required: true
+        default: '2048'
       include_docker:
         description: |
           是否编译 Docker 插件
@@ -120,6 +124,8 @@ jobs:
 
     - name: 🧱 构建ImmortalWrt固件
       working-directory: ./imagebuilder
+      env:
+        ROOTFS_PARTSIZE: ${{ inputs.rootfs_partsize }}
       run: |
         bash ./build24.sh
 
