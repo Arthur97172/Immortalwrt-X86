@@ -114,12 +114,13 @@ jobs:
           EOF
 
       - name: 🚀 上传到 Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v2.2.1
         with:
           tag_name: ImmortalWrt-${{ inputs.luci_version }}-x86-64-RELEASE-Docker-${{ inputs.include_docker }}
           body_path: ${{ github.workspace }}/router-info.md
           files: |
             imagebuilder/bin/targets/x86/64/*squashfs-combined-efi.img.gz
             imagebuilder/bin/targets/x86/64/sha256sums
+          token: ${{ secrets.GITHUB_TOKEN }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
