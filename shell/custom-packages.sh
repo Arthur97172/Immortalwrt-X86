@@ -1,7 +1,6 @@
 #!/bin/bash
 # ============= imm仓库外的第三方插件==============
 # ============= 若启用 则打开注释 ================
-# ============= 但此文件也可以处理仓库内的软件去留 本质上是做了一个PACKAGES字符串的拼接 ================
 
 # 代理相关
 #CUSTOM_PACKAGES="$CUSTOM_PACKAGES luci-app-passwall luci-i18n-passwall-zh-cn"
@@ -9,9 +8,7 @@
 
 CUSTOM_PACKAGES="$CUSTOM_PACKAGES luci-app-clashoo luci-i18n-clashoo-zh-cn"
 CUSTOM_PACKAGES="$CUSTOM_PACKAGES luci-app-nikki luci-i18n-nikki-zh-cn"
-# VPN
-#CUSTOM_PACKAGES="$CUSTOM_PACKAGES luci-app-tailscale"
-#CUSTOM_PACKAGES="$CUSTOM_PACKAGES luci-i18n-tailscale-zh-cn"
+CUSTOM_PACKAGES="$CUSTOM_PACKAGES luci-app-openclash"
 # 分区扩容 by sirpdboy 
 CUSTOM_PACKAGES="$CUSTOM_PACKAGES luci-app-partexp"
 CUSTOM_PACKAGES="$CUSTOM_PACKAGES luci-i18n-partexp-zh-cn"
@@ -27,6 +24,7 @@ CUSTOM_PACKAGES="$CUSTOM_PACKAGES luci-theme-argon luci-app-argon-config luci-i1
 #Poweroffdevice
 CUSTOM_PACKAGES="$CUSTOM_PACKAGES luci-app-poweroffdevice"
 CUSTOM_PACKAGES="$CUSTOM_PACKAGES luci-i18n-poweroffdevice-zh-cn"
+
 # MosDNS
 #CUSTOM_PACKAGES="$CUSTOM_PACKAGES luci-app-mosdns luci-i18n-mosdns-zh-cn"
 # Turbo ACC 网络加速
