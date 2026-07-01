@@ -6,7 +6,7 @@
 CUSTOM_PACKAGES="$CUSTOM_PACKAGES luci-theme-argon"
 
 # aurora主题 (aurora)
-CUSTOM_PACKAGES="$CUSTOM_PACKAGES luci-app-aurora-config luci-theme-aurora luci-i18n-aurora-config-zh-cn"
+#CUSTOM_PACKAGES="$CUSTOM_PACKAGES luci-app-aurora-config luci-theme-aurora luci-i18n-aurora-config-zh-cn"
 
 # bandix-plus网络流量监控 (bandix-plus)
 CUSTOM_PACKAGES="$CUSTOM_PACKAGES bandix-plus luci-app-bandix-plus luci-i18n-bandix-plus-zh-cn"
@@ -39,7 +39,7 @@ CUSTOM_PACKAGES="$CUSTOM_PACKAGES luci-app-openclash"
 CUSTOM_PACKAGES="$CUSTOM_PACKAGES luci-app-partexp luci-i18n-partexp-zh-cn"
 
 # passwall代理面板 (passwall)
-CUSTOM_PACKAGES="$CUSTOM_PACKAGES chinadns-ng geoview xray-core sing-box luci-app-passwall luci-i18n-passwall-zh-cn"
+CUSTOM_PACKAGES="$CUSTOM_PACKAGES geoview xray-core sing-box hysteria luci-app-passwall luci-i18n-passwall-zh-cn"
 
 # poweroffdevice关机 (poweroffdevice)
 CUSTOM_PACKAGES="$CUSTOM_PACKAGES luci-app-poweroffdevice luci-i18n-poweroffdevice-zh-cn"
